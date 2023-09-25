@@ -1,0 +1,157 @@
+[
+    {
+        "id": "db7aa2d1d5b3eb62",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8831f626fe26fc0f",
+        "type": "serial in",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "",
+        "serial": "120923a2d1ded854",
+        "x": 410,
+        "y": 300,
+        "wires": [
+            [
+                "0ee55fb315d5e5c2",
+                "5f495e57189188bc"
+            ]
+        ]
+    },
+    {
+        "id": "323f0d1817098f1d",
+        "type": "ui_text",
+        "z": "db7aa2d1d5b3eb62",
+        "group": "725ac1df3a05a880",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "A sua porta está:",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 790,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "0ee55fb315d5e5c2",
+        "type": "function",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "function 1",
+        "func": "var dataAgora = new Date();\n\nvar timeAsString = dataAgora.toLocaleTimeString();\n\n\n\nmsg.payload = msg.payload +\n\n    ' A hora  é ' +\n\n    timeAsString + '.' + '\\n';\n\n\n\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 300,
+        "wires": [
+            [
+                "323f0d1817098f1d",
+                "08e60e68fd70ba96"
+            ]
+        ]
+    },
+    {
+        "id": "5f495e57189188bc",
+        "type": "ui_toast",
+        "z": "db7aa2d1d5b3eb62",
+        "position": "top left",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "Atenção",
+        "name": "",
+        "x": 610,
+        "y": 560,
+        "wires": [],
+        "icon": "font-awesome/fa-hand-peace-o"
+    },
+    {
+        "id": "f88de56019a3eb1a",
+        "type": "file",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "",
+        "filename": "\\temp\\db.log",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 990,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "08e60e68fd70ba96",
+        "type": "csv",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 750,
+        "y": 460,
+        "wires": [
+            [
+                "f88de56019a3eb1a"
+            ]
+        ]
+    },
+    {
+        "id": "120923a2d1ded854",
+        "type": "serial-port",
+        "serialport": "com4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "725ac1df3a05a880",
+        "type": "ui_group",
+        "name": "HOME",
+        "tab": "1aa290a6673a8e43",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "1aa290a6673a8e43",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
