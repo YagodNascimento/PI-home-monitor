@@ -1,0 +1,226 @@
+[
+    {
+        "id": "db7aa2d1d5b3eb62",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8831f626fe26fc0f",
+        "type": "serial in",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "Arduino_input",
+        "serial": "120923a2d1ded854",
+        "x": 90,
+        "y": 300,
+        "wires": [
+            [
+                "0ee55fb315d5e5c2",
+                "5f495e57189188bc"
+            ]
+        ]
+    },
+    {
+        "id": "0ee55fb315d5e5c2",
+        "type": "function",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "Func data+horas",
+        "func": "var data = new Date(); \n//cria um objeto relacionado com a data\n\nvar dataAsString = data.toLocaleDateString();\n//usa a variavel data e adiciona a data local\n\nvar horaAsString = data.toLocaleTimeString();\n//usa a variavel data e adiciona as horas do  local\n\nmsg.payload = msg.payload + dataAsString \n+\" as \"+ horaAsString;\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "08e60e68fd70ba96",
+                "5fd8e746869df991"
+            ]
+        ]
+    },
+    {
+        "id": "5f495e57189188bc",
+        "type": "ui_toast",
+        "z": "db7aa2d1d5b3eb62",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "Atenção",
+        "name": "Notificacao",
+        "x": 290,
+        "y": 400,
+        "wires": [],
+        "icon": "font-awesome/fa-hand-peace-o"
+    },
+    {
+        "id": "f88de56019a3eb1a",
+        "type": "file",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "Arquivo CSV",
+        "filename": "\\temp\\db.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 770,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "08e60e68fd70ba96",
+        "type": "csv",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "status",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 550,
+        "y": 380,
+        "wires": [
+            [
+                "f88de56019a3eb1a",
+                "5c0729a6cc0bf81b",
+                "6b508b1b8241c350"
+            ]
+        ]
+    },
+    {
+        "id": "9aafc9836e53e55b",
+        "type": "http response",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "html response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "text/html"
+        },
+        "x": 960,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "5c0729a6cc0bf81b",
+        "type": "debug",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "test1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "5fd8e746869df991",
+        "type": "ui_text",
+        "z": "db7aa2d1d5b3eb62",
+        "group": "725ac1df3a05a880",
+        "order": 0,
+        "width": "6",
+        "height": "7",
+        "name": "Porta",
+        "label": "Sua Porta está:",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 550,
+        "y": 220,
+        "wires": [],
+        "icon": "node-red/file.svg"
+    },
+    {
+        "id": "6b508b1b8241c350",
+        "type": "template",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<html>\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n</head>\n\n<body>\n  TESTE, Precisamo colocar o arquivo CVS aqui\n</body>\n\n</html>",
+        "output": "str",
+        "x": 760,
+        "y": 120,
+        "wires": [
+            [
+                "9aafc9836e53e55b"
+            ]
+        ]
+    },
+    {
+        "id": "5eb58782fd55f634",
+        "type": "http in",
+        "z": "db7aa2d1d5b3eb62",
+        "name": "PI2",
+        "url": "/test",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 550,
+        "y": 120,
+        "wires": [
+            [
+                "6b508b1b8241c350"
+            ]
+        ]
+    },
+    {
+        "id": "120923a2d1ded854",
+        "type": "serial-port",
+        "serialport": "com4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "725ac1df3a05a880",
+        "type": "ui_group",
+        "name": "Sistema de Segurança",
+        "tab": "1aa290a6673a8e43",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "1aa290a6673a8e43",
+        "type": "ui_tab",
+        "name": "UNIVESP - CAJATI",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
